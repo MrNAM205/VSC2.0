@@ -6,9 +6,10 @@ import { Template, ArchiveEntry } from '../types';
 interface DrafterProps {
   onArchive: (entry: ArchiveEntry) => void;
   initialTemplateId?: string | null;
+  payload?: any;
 }
 
-const Drafter: React.FC<DrafterProps> = ({ onArchive, initialTemplateId }) => {
+const Drafter: React.FC<DrafterProps> = ({ onArchive, initialTemplateId, payload }) => {
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [preview, setPreview] = useState<string>('');
@@ -21,6 +22,49 @@ const Drafter: React.FC<DrafterProps> = ({ onArchive, initialTemplateId }) => {
         if (tmpl) handleTemplateSelect(tmpl);
     }
   }, [initialTemplateId]);
+
+  // Logic to auto-fill fields if a payload is available
+  useEffect(() => {
+    if (payload && selectedTemplate) {
+        const newFormData = { ...formData };
+        
+        // Intelligent Field Mapping
+        selectedTemplate.fields.forEach(field => {
+            const key = field.key.toLowerCase();
+            
+            // Map Birth Certificate fields
+            if (payload.docType === 'Birth Certificate') {
+                if (key.includes('state_file') || key.includes('file_no')) {
+                    newFormData[field.key] = payload.identifiers?.stateFileNo || '';
+                }
+                if (key.includes('registrant') || key.includes('name_on_record')) {
+                    newFormData[field.key] = payload.entities?.nameOnRecord || '';
+                }
+                if (key.includes('dob') || key.includes('birth_date')) {
+                    newFormData[field.key] = payload.identifiers?.registrationDate || ''; // Fallback to reg date if specific DOB missing
+                }
+                if (key.includes('registrar')) {
+                    newFormData[field.key] = payload.entities?.registrar || '';
+                }
+            }
+
+            // Map Media Audit fields
+            if (payload.docType === 'Media Audit') {
+                if (key.includes('summary') || key.includes('transcript')) {
+                    newFormData[field.key] = payload.transcript || payload.summary || '';
+                }
+                if (key.includes('agent') || key.includes('entity')) {
+                    newFormData[field.key] = payload.entities?.join(', ') || '';
+                }
+                if (key.includes('standing') || key.includes('assertion')) {
+                    newFormData[field.key] = payload.standingAudit || '';
+                }
+            }
+        });
+        
+        setFormData(newFormData);
+    }
+  }, [payload, selectedTemplate?.id]);
 
   const handleTemplateSelect = (template: Template) => {
     setSelectedTemplate(template);
@@ -99,6 +143,14 @@ const Drafter: React.FC<DrafterProps> = ({ onArchive, initialTemplateId }) => {
       <div className="w-96 bg-slate-900 border-r border-slate-800 flex flex-col overflow-y-auto shrink-0">
         <div className="p-6 border-b border-slate-800">
           <h2 className="font-serif font-bold text-sovereign-200 text-lg mb-4">Template Selector</h2>
+          
+          {payload && (
+              <div className="mb-4 bg-indigo-900/20 border border-indigo-500/30 p-3 rounded text-[10px] text-indigo-300 font-mono flex items-center">
+                  <span className="w-2 h-2 bg-indigo-500 rounded-full mr-2 animate-pulse"></span>
+                  Payload Active: Neural Auto-Fill Engaged ({payload.docType})
+              </div>
+          )}
+
           <select 
             className="w-full bg-slate-950 border border-slate-700 text-slate-300 rounded p-2 mb-4 focus:ring-1 focus:ring-sovereign-600 focus:border-sovereign-600 font-sans text-sm"
             onChange={(e) => {

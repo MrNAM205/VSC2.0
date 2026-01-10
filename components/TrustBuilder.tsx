@@ -189,6 +189,29 @@ TRUST BANKING EXECUTION CHECKLIST (IUL FUNDING)
 
                     {assetType === 'iul' && (
                         <div className="space-y-4 border-l-2 border-slate-800 pl-4">
+                            {/* Visual Roadmap for IUL */}
+                            <div className="mb-4 space-y-2">
+                                <label className="text-xs text-slate-500 font-mono uppercase tracking-wide">Execution Roadmap</label>
+                                <div className="flex flex-col space-y-2 text-[10px] text-slate-400 font-mono">
+                                    <div className="flex items-center">
+                                        <div className="w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center mr-2 text-slate-500">1</div>
+                                        <span>DESIGN: Max-Funded Policy Structure (MEC Limit)</span>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <div className="w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center mr-2 text-slate-500">2</div>
+                                        <span>APPLICATION: Trust as Owner/Beneficiary</span>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <div className="w-4 h-4 rounded-full bg-emerald-900/30 border border-emerald-500 flex items-center justify-center mr-2 text-emerald-400">3</div>
+                                        <span className="text-emerald-300">ASSIGNMENT: Transfer Existing Policy (Use Deed)</span>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <div className="w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center mr-2 text-slate-500">4</div>
+                                        <span>BANKING: Policy Loans for Liquidity</span>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div>
                                 <label className="block text-xs text-slate-400 mb-1 font-mono">Insurance Carrier</label>
                                 <input 

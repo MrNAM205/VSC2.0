@@ -16,39 +16,53 @@ import PersonaManager from './components/PersonaManager';
 import TrustBuilder from './components/TrustBuilder';
 import TopicExplorer from './components/TopicExplorer';
 import RemedyTracker from './components/RemedyTracker';
+import PlaybookEngine from './components/PlaybookEngine';
+import ResearchLab from './components/ResearchLab';
+import MediaInterceptor from './components/MediaInterceptor';
+import PropertyTaxModule from './components/PropertyTaxModule';
+import ForbiddenDecoder from './components/ForbiddenDecoder';
 import { ArchiveEntry } from './types';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState('dashboard');
   const [activeResourceId, setActiveResourceId] = useState<string | null>(null);
+  const [activePayload, setActivePayload] = useState<any>(null);
   const [archive, setArchive] = useState<ArchiveEntry[]>([]);
 
   const handleArchive = (entry: ArchiveEntry) => {
     setArchive(prev => [...prev, entry]);
   };
 
-  const handleNavigate = (view: string, resourceId?: string) => {
+  const handleNavigate = (view: string, resourceId?: string, payload?: any) => {
     setCurrentView(view);
     if (resourceId) {
         setActiveResourceId(resourceId);
+    }
+    if (payload) {
+        setActivePayload(payload);
     }
   };
 
   const renderView = () => {
     switch(currentView) {
       case 'dashboard': return <Dashboard />;
+      case 'decoder': return <ForbiddenDecoder onArchive={handleArchive} onNavigate={handleNavigate} />;
+      case 'tax': return <PropertyTaxModule onArchive={handleArchive} onNavigate={handleNavigate} />;
+      case 'media': return <MediaInterceptor onArchive={handleArchive} onNavigate={handleNavigate} />;
+      case 'lab': return <ResearchLab />;
+      case 'playbooks': return <PlaybookEngine onArchive={handleArchive} />;
       case 'topics': return <TopicExplorer onNavigate={handleNavigate} />;
-      case 'filing': return <FilingNavigator onNavigate={handleNavigate} />;
+      case 'filing': return <FilingNavigator onNavigate={handleNavigate} initialWorkflowId={activeResourceId} payload={activePayload} />;
       case 'remedy': return <RemedyTracker onNavigate={handleNavigate} />;
       case 'identity': return <PersonaManager />;
       case 'trust': return <TrustBuilder />;
-      case 'jarvis': return <Jarvis />;
+      case 'jarvis': return <Jarvis onNavigate={handleNavigate} />;
       case 'dialogos': return <Dialogos />;
       case 'endorsement': return <EndorsementStudio />;
       case 'vault': return <Vault />;
       case 'knowledge': return <KnowledgeView />;
       case 'cognition': return <CognitionConsole onArchive={handleArchive} />;
-      case 'drafter': return <Drafter onArchive={handleArchive} initialTemplateId={activeResourceId} />;
+      case 'drafter': return <Drafter onArchive={handleArchive} initialTemplateId={activeResourceId} payload={activePayload} />;
       case 'scripts': return <ScriptViewer initialScriptId={activeResourceId} />;
       case 'archive': return <Archive entries={archive} />;
       default: return <Dashboard />;

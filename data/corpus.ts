@@ -2,171 +2,84 @@
 import { CorpusItem, CorpusType } from '../types';
 
 export const MOCK_CORPUS: CorpusItem[] = [
-  // --- EXISTING ITEMS (Preserved) ---
   {
-    id: 'blacks-4th-jurisprudence',
-    type: CorpusType.DICTIONARY,
-    title: 'Jurisprudence',
-    citation: "Black's Law Dictionary (4th Ed.)",
-    jurisdiction: 'Universal',
-    text: 'The philosophy or science of law; the knowledge of things divine and human, the science of the just and the unjust. The study of the fundamental principles of a legal system.',
-    notes: 'Base definition for the module. Distinguishes between "law" (statute) and "jurisprudence" (the science/philosophy behind it).',
-    tags: ['definitions', 'philosophy', 'root']
+    id: 'land-patent-authority',
+    type: CorpusType.STATUTE,
+    title: 'Land Patent (Supreme Title)',
+    citation: 'Summa Corp. v. California ex rel. State Lands Comm’n, 466 U.S. 198 (1984)',
+    jurisdiction: 'US Supreme Court',
+    text: 'A land patent is the highest evidence of title and is immune to collateral attack. Once the patent is issued, the government has divested itself of all interest in the land. Most modern deeds are merely "color of title" (statutory), whereas the Patent represents the Allodial root used by the original estate-holders.',
+    notes: 'The ultimate shield for land. Moving land back into the "Patent" status removes it from the municipal jurisdiction of taxation if done correctly.',
+    tags: ['land-rights', 'property', 'allodial', 'patent']
   },
   {
-    id: 'blacks-4th-pro-se',
-    type: CorpusType.DICTIONARY,
-    title: 'Pro Se',
-    citation: "Black's Law Dictionary (4th Ed.)",
-    jurisdiction: 'Universal',
-    text: 'For himself; in his own behalf; in person. Appearing for oneself, as in the case of one who does not retain a lawyer and appears for himself in court.',
-    notes: 'The lawful term for self-representation. Distinct from "Sovereign Citizen" rhetoric; widely recognized in procedural rules.',
-    tags: ['definitions', 'procedure', 'status', 'pro-se']
-  },
-  {
-    id: 'blacks-4th-cestui-que-trust',
+    id: 'cestui-que-trust-def',
     type: CorpusType.DICTIONARY,
     title: 'Cestui Que Trust',
-    citation: "Black's Law Dictionary (4th Ed.)",
-    jurisdiction: 'Universal / Equity',
-    text: 'He who has a right to a beneficial interest in and out of an estate the legal title to which is vested in another. The person who possesses the equitable right to property and receives the rents, issues, and profits thereof, the legal estate of which is vested in a trustee.',
-    notes: 'The existence of this definition in the standard legal dictionary refutes claims that the concept is "frivolous". It proves the legal recognition of split title (legal vs. equitable) is foundational to Western law.',
-    tags: ['trusts', 'equity', 'definitions', 'cestui-que-trust']
-  },
-  // ... (Previous items preserved for brevity, inserting new items below) ...
-
-  // --- UNDRIP (INDIGENOUS RIGHTS) ---
-  {
-    id: 'undrip-art-3',
-    type: CorpusType.STATUTE,
-    title: 'UNDRIP Article 3: Self-Determination',
-    citation: 'UN Declaration on the Rights of Indigenous Peoples',
-    jurisdiction: 'International',
-    text: 'Indigenous peoples have the right to self-determination. By virtue of that right they freely determine their political status and freely pursue their economic, social and cultural development.',
-    notes: 'The bedrock of indigenous sovereignty. Used to assert that you determine your status, not the state.',
-    tags: ['undrip', 'indigenous', 'rights', 'international']
+    citation: "Black's Law Dictionary 4th Ed.",
+    jurisdiction: 'Equity / Trust Law',
+    text: 'He who has a right to a beneficial interest in and out of an estate the legal title to which is vested in another. The person who possesses the equitable right to property and receives the rents, issues, and profits thereof.',
+    notes: 'In the sovereign context, the "Strawman" (ALL CAPS NAME) is often viewed as the Trust, while the living man is the Cestui Que Trust or Beneficiary.',
+    tags: ['trusts', 'equity', 'status', 'cestui-que-trust']
   },
   {
-    id: 'undrip-art-26',
-    type: CorpusType.STATUTE,
-    title: 'UNDRIP Article 26: Lands & Resources',
-    citation: 'UN Declaration on the Rights of Indigenous Peoples',
-    jurisdiction: 'International',
-    text: '1. Indigenous peoples have the right to the lands, territories and resources which they have traditionally owned, occupied or otherwise used or acquired.',
-    notes: 'Used to challenge property taxes or land use restrictions on ancestral/allodial land.',
-    tags: ['undrip', 'indigenous', 'land', 'property']
-  },
-  {
-    id: 'undrip-art-4',
-    type: CorpusType.STATUTE,
-    title: 'UNDRIP Article 4: Autonomy',
-    citation: 'UN Declaration on the Rights of Indigenous Peoples',
-    jurisdiction: 'International',
-    text: 'Indigenous peoples, in exercising their right to self-determination, have the right to autonomy or self-government in matters relating to their internal and local affairs.',
-    tags: ['undrip', 'indigenous', 'sovereignty']
-  },
-
-  // --- ADRIP (AMERICAN DECLARATION) ---
-  {
-    id: 'adrip-art-6',
-    type: CorpusType.STATUTE,
-    title: 'ADRIP Article 6: Equality & Non-Discrimination',
-    citation: 'American Declaration on the Rights of Indigenous Peoples',
-    jurisdiction: 'International / OAS',
-    text: 'Indigenous peoples have the right to full enjoyment of all human rights and fundamental freedoms... States must prevent and eliminate discrimination against Indigenous peoples.',
-    notes: 'Asserts equal protection under international standards.',
-    tags: ['adrip', 'indigenous', 'rights', 'international']
-  },
-  {
-    id: 'adrip-art-9',
-    type: CorpusType.STATUTE,
-    title: 'ADRIP Article 9: Juridical Personality',
-    citation: 'American Declaration on the Rights of Indigenous Peoples',
-    jurisdiction: 'International / OAS',
-    text: 'Indigenous peoples and nations have juridical personality. They have the right to recognition of their legal systems, institutions, and customs.',
-    notes: 'Critical for establishing standing as a distinct legal entity/nation, not just a subject.',
-    tags: ['adrip', 'indigenous', 'status', 'international']
-  },
-  {
-    id: 'adrip-art-12',
-    type: CorpusType.STATUTE,
-    title: 'ADRIP Article 12: Identity & Belonging',
-    citation: 'American Declaration on the Rights of Indigenous Peoples',
-    jurisdiction: 'International / OAS',
-    text: 'Indigenous peoples have the right to maintain and strengthen their spiritual, cultural, and historical identity. States must respect and protect this identity.',
-    tags: ['adrip', 'indigenous', 'identity']
-  },
-  {
-    id: 'adrip-art-15',
-    type: CorpusType.STATUTE,
-    title: 'ADRIP Article 15: Self-Determination',
-    citation: 'American Declaration on the Rights of Indigenous Peoples',
-    jurisdiction: 'International / OAS',
-    text: 'Indigenous peoples have the right to self-determination. They may freely determine their political status and pursue economic, social, and cultural development.',
-    tags: ['adrip', 'indigenous', 'sovereignty']
-  },
-
-  // --- ILO CONVENTION 169 ---
-  {
-    id: 'ilo-169-art-2',
-    type: CorpusType.STATUTE,
-    title: 'ILO 169 Article 2: Protection of Rights',
-    citation: 'Indigenous and Tribal Peoples Convention, 1989',
-    jurisdiction: 'International / ILO',
-    text: 'Governments must protect the rights of Indigenous peoples and ensure respect for their integrity. Measures must be taken to eliminate discrimination.',
-    notes: 'Imposes a positive duty on governments to protect, not just abstain from harm.',
-    tags: ['ilo-169', 'indigenous', 'protection']
-  },
-  {
-    id: 'ilo-169-art-7',
-    type: CorpusType.STATUTE,
-    title: 'ILO 169 Article 7: Development Priorities',
-    citation: 'Indigenous and Tribal Peoples Convention, 1989',
-    jurisdiction: 'International / ILO',
-    text: 'Indigenous peoples have the right to decide their own priorities for development. They must participate in decisions affecting their lives, beliefs, institutions, and lands.',
-    tags: ['ilo-169', 'indigenous', 'land', 'development']
-  },
-  {
-    id: 'ilo-169-art-8',
-    type: CorpusType.STATUTE,
-    title: 'ILO 169 Article 8: Customary Law',
-    citation: 'Indigenous and Tribal Peoples Convention, 1989',
-    jurisdiction: 'International / ILO',
-    text: 'In applying national laws, due regard must be given to Indigenous customs and customary law. Indigenous peoples have the right to retain their own institutions.',
-    notes: 'Allows you to bring "Customary Law" into a statutory court.',
-    tags: ['ilo-169', 'indigenous', 'law', 'customary']
-  },
-
-  // --- EXCLUSIVE EQUITY ---
-  {
-    id: 'exclusive-equity',
+    id: 'jurisprudence-def',
     type: CorpusType.DICTIONARY,
-    title: 'Exclusive Jurisdiction of Equity',
-    citation: "Story's Equity Jurisprudence",
-    jurisdiction: 'Equity',
-    text: 'That portion of equity jurisdiction which embraces rights/remedies that the common law does not recognize or enforce. Includes Trusts, Fiduciary Duties, and Redemption.',
-    notes: 'When dealing with a Trust, the court MUST sit in Equity. Common Law courts cannot adjudicate trusts.',
-    tags: ['exclusive-equity', 'trusts', 'jurisdiction', 'definitions']
+    title: 'Jurisprudence',
+    citation: "Black's Law Dictionary 4th Ed.",
+    jurisdiction: 'General Law',
+    text: 'The philosophy of law, or the science which treats of the principles of positive law and legal relations. In the proper sense of the word, "jurisprudence" is the science of law, namely, that science which has for its function to ascertain the principles on which legal rules are based.',
+    notes: 'Understanding the *why* behind the rule allows the Maverick to find the exception.',
+    tags: ['jurisprudence', 'philosophy', 'legal-theory']
   },
   {
-    id: 'fiduciary-duty',
+    id: 'pro-se-def',
     type: CorpusType.DICTIONARY,
-    title: 'Fiduciary Duty',
-    citation: "Black's Law Dictionary (4th Ed.)",
-    jurisdiction: 'Equity',
-    text: 'A duty to act for someone else\'s benefit, while subordinating one\'s personal interest to that of the other person. It is the highest standard of duty implied by law.',
-    notes: 'Public officials are fiduciaries (Trustees) of the public trust. Violation is a breach of trust, handled in Exclusive Equity.',
-    tags: ['exclusive-equity', 'fiduciary', 'definitions']
+    title: 'Pro Se',
+    citation: "Black's Law Dictionary 4th Ed.",
+    jurisdiction: 'Procedural Law',
+    text: 'For himself; in his own behalf; in person. Appearing for oneself, as in the case of one who does not retain a lawyer and appears for himself in court.',
+    notes: 'Mavericks often prefer "In Propria Persona" or "Sui Juris" to avoid the "Pro Se" wardship presumption.',
+    tags: ['status', 'court', 'pro-se', 'standing']
   },
-  // --- EXISTING CORE ITEMS CONTINUED (Sample) ---
   {
-    id: 'murdock-v-pa',
-    type: CorpusType.CASE_LAW,
-    title: 'Murdock v. Pennsylvania',
-    citation: '319 U.S. 105 (1943)',
-    jurisdiction: 'US Supreme Court',
-    text: 'A state may not impose a charge for the enjoyment of a right granted by the federal constitution. No state may convert a secured liberty into a privilege, and issue a license and fee for it.',
-    notes: 'The "Liberty vs. Privilege" anchor. Essential for challenging traffic laws and licensing schemes.',
-    tags: ['case-law', 'rights', 'travel', 'license']
+    id: 'equity-maxims',
+    type: CorpusType.COMMENTARY,
+    title: 'Maxims of Equity',
+    citation: 'Bouvier’s Maxims of Law',
+    jurisdiction: 'Equity',
+    text: '1. Equity follows the law. 2. He who seeks equity must do equity. 3. He who comes into equity must come with clean hands. 4. Equity will not suffer a wrong to be without a remedy. 5. Equity regards that as done which ought to be done.',
+    notes: 'Crucial for "Recourse" procedures. If there is no remedy at law (statute), one must seek it in Equity.',
+    tags: ['equity', 'maxims', 'recourse', 'remedy']
+  },
+  {
+    id: 'representative-capacity',
+    type: CorpusType.RULE,
+    title: 'Representative Capacity',
+    citation: 'UCC 3-402(b)(1)',
+    jurisdiction: 'Commercial Law',
+    text: 'If a person signs their name in a representative capacity, the represented person (the fiction) is liable on the instrument, but the signer is NOT liable if the signature shows it was made on behalf of the represented person.',
+    notes: 'The primary defense against personal liability for the strawman\'s debts.',
+    tags: ['status', 'standing', 'ucc', 'commercial']
+  },
+  {
+    id: 'without-prejudice-308',
+    type: CorpusType.RULE,
+    title: 'Without Prejudice (UCC 1-308)',
+    citation: 'Uniform Commercial Code § 1-308',
+    jurisdiction: 'Commercial Law',
+    text: 'A party that with explicit reservation of rights performs or promises performance... does not thereby prejudice the rights reserved. Words such as "without prejudice," "under protest," or the like are sufficient.',
+    notes: 'Standard notation to prevent unintended waivers of rights.',
+    tags: ['commercial', 'rights', 'procedure']
+  },
+  {
+    id: 'rescission-doctrine',
+    type: CorpusType.COMMENTARY,
+    title: 'Doctrine of Rescission',
+    citation: 'Restatement (Second) of Contracts',
+    jurisdiction: 'Contract Law',
+    text: 'Rescission is the unmaking of a contract from the beginning (void ab initio). It is the undoing of a thing from the beginning, not merely its termination. Grounds for rescission include fraud, mutual mistake, lack of capacity, or duress.',
+    notes: 'Essential for undoing "Joinder" created by signing tickets or applications without full disclosure.',
+    tags: ['contract', 'rescission', 'remedy', 'recourse']
   }
 ];

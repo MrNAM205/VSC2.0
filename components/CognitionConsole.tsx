@@ -1,6 +1,8 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { getCognitionResponse } from '../services/geminiService';
-import { CognitionMode, ArchiveEntry, MapLink } from '../types';
+import { CognitionMode, ArchiveEntry, MapLink, SideProject } from '../types';
+import { list } from '../lib/store';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -24,6 +26,11 @@ const CognitionConsole: React.FC<CognitionConsoleProps> = ({ onArchive }) => {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState<CognitionMode>(CognitionMode.STRICT);
+  
+  // Research Context State
+  const [availableProjects, setAvailableProjects] = useState<SideProject[]>([]);
+  const [activeProjectContext, setActiveProjectContext] = useState<SideProject | undefined>(undefined);
+  
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -32,6 +39,7 @@ const CognitionConsole: React.FC<CognitionConsoleProps> = ({ onArchive }) => {
 
   useEffect(() => {
     scrollToBottom();
+    setAvailableProjects(list<SideProject>('projects'));
   }, [messages]);
 
   const handleSend = async () => {
@@ -42,7 +50,7 @@ const CognitionConsole: React.FC<CognitionConsoleProps> = ({ onArchive }) => {
     setInput('');
     setLoading(true);
 
-    const result = await getCognitionResponse(userMsg.content, mode);
+    const result = await getCognitionResponse(userMsg.content, mode, activeProjectContext);
     
     const aiMsg: Message = { 
         role: 'assistant', 
@@ -59,7 +67,7 @@ const CognitionConsole: React.FC<CognitionConsoleProps> = ({ onArchive }) => {
       timestamp: Date.now(),
       type: 'COGNITION',
       title: `Cognition: ${userMsg.content.substring(0, 30)}...`,
-      summary: `Mode: ${mode}. User query processed.`,
+      summary: `Mode: ${mode}. ${activeProjectContext ? `Research Pin: ${activeProjectContext.title}` : 'No project pinned'}.`,
       details: `Q: ${userMsg.content}\n\nA: ${result.text}`,
       checksum: Math.random().toString(36).substring(7)
     });
@@ -73,20 +81,38 @@ const CognitionConsole: React.FC<CognitionConsoleProps> = ({ onArchive }) => {
           <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
           <h2 className="font-serif font-bold text-sovereign-200">Cognition Console</h2>
         </div>
-        <div className="flex space-x-1 bg-slate-800 p-1 rounded-lg">
-          {Object.values(CognitionMode).map((m) => (
-            <button
-              key={m}
-              onClick={() => setMode(m)}
-              className={`px-3 py-1.5 text-xs font-mono rounded-md transition-all ${
-                mode === m 
-                  ? 'bg-sovereign-700 text-white shadow-md' 
-                  : 'text-slate-400 hover:text-sovereign-200 hover:bg-slate-700'
-              }`}
-            >
-              {m === CognitionMode.LOCATOR ? '📍 Locator' : m}
-            </button>
-          ))}
+
+        <div className="flex items-center space-x-4">
+            {/* Project Context Pinner */}
+            <div className="flex items-center space-x-2 bg-slate-800/50 border border-slate-700 px-3 py-1 rounded-lg">
+                <svg className="w-3 h-3 text-amber-500" fill="currentColor" viewBox="0 0 24 24"><path d="M16 9V4l1 1V3H7v2l1-1v5c0 2.21-1.79 4-4 4v2h7v7l1 1 1-1v-7h7v-2c-2.21 0-4-1.79-4-4z"/></svg>
+                <select 
+                    className="bg-transparent text-[10px] font-mono text-slate-300 focus:outline-none"
+                    value={activeProjectContext?.id || ''}
+                    onChange={(e) => setActiveProjectContext(availableProjects.find(p => p.id === e.target.value))}
+                >
+                    <option value="">No Research Pinned</option>
+                    {availableProjects.map(p => (
+                        <option key={p.id} value={p.id}>{p.title} ({p.artifacts.length} Arts)</option>
+                    ))}
+                </select>
+            </div>
+
+            <div className="flex space-x-1 bg-slate-800 p-1 rounded-lg">
+            {Object.values(CognitionMode).map((m) => (
+                <button
+                key={m}
+                onClick={() => setMode(m)}
+                className={`px-3 py-1.5 text-xs font-mono rounded-md transition-all ${
+                    mode === m 
+                    ? 'bg-sovereign-700 text-white shadow-md' 
+                    : 'text-slate-400 hover:text-sovereign-200 hover:bg-slate-700'
+                }`}
+                >
+                {m === CognitionMode.LOCATOR ? '📍 Locator' : m}
+                </button>
+            ))}
+            </div>
         </div>
       </div>
 
@@ -158,7 +184,7 @@ const CognitionConsole: React.FC<CognitionConsoleProps> = ({ onArchive }) => {
                 handleSend();
               }
             }}
-            placeholder={mode === CognitionMode.LOCATOR ? "Enter query e.g. 'Probate Court in Shelby County AL'..." : "Interrogate the corpus or request synthesis..."}
+            placeholder={activeProjectContext ? `Query using context from "${activeProjectContext.title}"...` : "Interrogate the corpus or request synthesis..."}
             className="w-full bg-slate-950 text-slate-200 border border-slate-700 rounded-xl pl-4 pr-12 py-3 focus:outline-none focus:border-sovereign-500 focus:ring-1 focus:ring-sovereign-500 resize-none h-14 scrollbar-hide font-sans"
           />
           <button
@@ -173,7 +199,7 @@ const CognitionConsole: React.FC<CognitionConsoleProps> = ({ onArchive }) => {
         </div>
         <div className="text-center mt-2">
             <span className="text-[10px] text-slate-500 font-mono">
-                {mode === CognitionMode.LOCATOR ? "Grounding with Google Maps" : "AI can make mistakes. Verify against the Knowledge Corpus."}
+                {activeProjectContext ? `OmniVero Synthesis PINNED to ${activeProjectContext.title}` : "AI can make mistakes. Verify against the Knowledge Corpus."}
             </span>
         </div>
       </div>
